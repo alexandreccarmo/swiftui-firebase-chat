@@ -8,16 +8,27 @@
 import SwiftUI
 import Firebase
 
+//singleton necessario para os recursos de fibase funcionarem no preview :)
+class FirabaseManager: NSObject {
+    
+    let auth: Auth
+    
+    static let shared = FirabaseManager()
+    
+    override init() {
+        FirebaseApp.configure()
+        
+        self.auth = Auth.auth()
+        
+        super.init()
+    }
+}
+
 struct LoginView: View {
     
     @State var isLogginModel = false
     @State var email = ""
     @State var senha = ""
-    @State var password = ""
-    
-    init() {
-        FirebaseApp.configure()
-    }
     
     var body: some View {
         
@@ -93,7 +104,7 @@ struct LoginView: View {
     }
     
     private func loginUser(){
-        Auth.auth().signIn(withEmail: email, password: senha) {
+        FirabaseManager.shared.auth.signIn(withEmail: email, password: senha) {
             res, error in
             
             if let error = error {
@@ -111,7 +122,7 @@ struct LoginView: View {
     @State var loginStatusMessage = ""
     
     private func createNewAccount(){
-        Auth.auth().createUser(withEmail: self.email, password: self.senha){
+        FirabaseManager.shared.auth.createUser(withEmail: self.email, password: self.senha){
             result,error in
             
             if let error = error {
