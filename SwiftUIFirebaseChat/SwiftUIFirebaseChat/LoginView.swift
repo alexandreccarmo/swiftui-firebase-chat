@@ -7,18 +7,22 @@
 
 import SwiftUI
 import Firebase
+import FirebaseStorage
+import Firebase
 
 //singleton necessario para os recursos de fibase funcionarem no preview :)
-class FirabaseManager: NSObject {
+class FirebaseManager: NSObject {
     
     let auth: Auth
+    let storage: Storage
     
-    static let shared = FirabaseManager()
+    static let shared = FirebaseManager()
     
     override init() {
         FirebaseApp.configure()
         
         self.auth = Auth.auth()
+        self.storage = Storage.storage()
         
         super.init()
     }
@@ -29,6 +33,8 @@ struct LoginView: View {
     @State var isLogginModel = false
     @State var email = ""
     @State var senha = ""
+    
+    @State var shouldShowImagePicker = false
     
     var body: some View {
         
@@ -46,13 +52,28 @@ struct LoginView: View {
                     
                     if !isLogginModel {
                         Button{
-                            
+                            shouldShowImagePicker.toggle()
                             
                         } label: {
                             
-                            Image(systemName: "person.fill")
-                                .font(.system(size: 64))
-                                .padding()
+                            VStack{
+                                if let image = self.image {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width:  64, height: 64)
+                                        .cornerRadius(32)
+                                } else {
+                                    Image(systemName: "person.fill")
+                                        .font(.system(size: 64))
+                                        .padding()
+                                        .foregroundColor(Color(.label))
+                                }
+                            }
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 64)
+                                .stroke(Color.black, lineWidth: 3)
+                            )
                         }
                     }
                     
@@ -91,8 +112,13 @@ struct LoginView: View {
                 .ignoresSafeArea())
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil) {
+            ImagePicker(image: $image)
+        }
                
     }
+    
+    @State var image: UIImage?
     
     private func handleAction() {
         if isLogginModel {
@@ -104,7 +130,7 @@ struct LoginView: View {
     }
     
     private func loginUser(){
-        FirabaseManager.shared.auth.signIn(withEmail: email, password: senha) {
+        FirebaseManager.shared.auth.signIn(withEmail: email, password: senha) {
             res, error in
             
             if let error = error {
@@ -122,7 +148,7 @@ struct LoginView: View {
     @State var loginStatusMessage = ""
     
     private func createNewAccount(){
-        FirabaseManager.shared.auth.createUser(withEmail: self.email, password: self.senha){
+        FirebaseManager.shared.auth.createUser(withEmail: self.email, password: self.senha){
             result,error in
             
             if let error = error {
@@ -134,6 +160,38 @@ struct LoginView: View {
             print("Conta criado, usuario: \(result?.user.uid ?? "")" )
             
             self.loginStatusMessage = "Conta criada com sucesso \(result?.user.uid ?? "")"
+            
+            self.persistImageToStorage()
+            
+        }
+    }
+    
+    private func persistImageToStorage() {
+        
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        let ref = FirebaseManager.shared.storage.reference(withPath: uid)
+        guard let imageData = self.image?.jpegData(compressionQuality: 0.5) else { return }
+        
+        ref.putData(imageData, metadata: nil) {
+            metadata, error in
+            if let error = error {
+                self.loginStatusMessage = "Erro ao enviar a imagem: \(error)"
+                return
+            }
+            
+            ref.downloadURL { url, error in
+                
+                if let error = error {
+                    self.loginStatusMessage = "Erro fazer o download : \(error)"
+                    return
+                }
+                
+                self.loginStatusMessage = "Download realizado com suscesso na url: \(url?.absoluteString ?? "")"
+                
+                print(url?.absoluteString ?? "")
+                
+            }
+            
         }
     }
 }
