@@ -8,13 +8,14 @@
 import SwiftUI
 import Firebase
 import FirebaseStorage
-import Firebase
+import FirebaseFirestore
 
 //singleton necessario para os recursos de fibase funcionarem no preview :)
 class FirebaseManager: NSObject {
     
     let auth: Auth
     let storage: Storage
+    let fireStore: Firestore
     
     static let shared = FirebaseManager()
     
@@ -23,6 +24,7 @@ class FirebaseManager: NSObject {
         
         self.auth = Auth.auth()
         self.storage = Storage.storage()
+        self.fireStore = Firestore.firestore()
         
         super.init()
     }
@@ -190,9 +192,30 @@ struct LoginView: View {
                 
                 print(url?.absoluteString ?? "")
                 
+                guard let url = url else { return }
+                storeUserInformation(imageProfileUrl: url)
+                
             }
             
         }
+    }
+    
+    private func storeUserInformation(imageProfileUrl: URL){
+        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else { return }
+        
+        let userData = ["email":self.email, "uid": uid, "profileImageUrl": imageProfileUrl.absoluteString]
+        
+        FirebaseManager.shared.fireStore.collection("users")
+            .document(uid).setData(userData) { error in
+                print(error ?? "")
+                
+                self.loginStatusMessage = "\(String(describing: error))"
+                return
+            }
+        
+        print("armazenado com suceeso no firestore")
+        
+        
     }
 }
 
