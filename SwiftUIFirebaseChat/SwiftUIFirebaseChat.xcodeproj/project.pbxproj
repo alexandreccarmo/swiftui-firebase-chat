@@ -16,6 +16,7 @@
 		EDE4489B298F094F00477F56 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDE4489A298F094F00477F56 /* LoginView.swift */; };
 		EDE4489D298F095000477F56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDE4489C298F095000477F56 /* Assets.xcassets */; };
 		EDE448A0298F095000477F56 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EDE4489F298F095000477F56 /* Preview Assets.xcassets */; };
+		EDF845A929B02F5200E52E0B /* MainMessegesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDF845A829B02F5200E52E0B /* MainMessegesView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		EDE4489A298F094F00477F56 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		EDE4489C298F095000477F56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EDE4489F298F095000477F56 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		EDF845A829B02F5200E52E0B /* MainMessegesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMessegesView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 		EDE44897298F094F00477F56 /* SwiftUIFirebaseChat */ = {
 			isa = PBXGroup;
 			children = (
+				EDF845A729B02F1800E52E0B /* MainMessages */,
 				EDE44898298F094F00477F56 /* SwiftUIFirebaseChatApp.swift */,
 				EDE4489A298F094F00477F56 /* LoginView.swift */,
 				EDD9162629A6F5BC00AC7FD5 /* ImagePicker.swift */,
@@ -77,6 +80,14 @@
 				EDE4489F298F095000477F56 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		EDF845A729B02F1800E52E0B /* MainMessages */ = {
+			isa = PBXGroup;
+			children = (
+				EDF845A829B02F5200E52E0B /* MainMessegesView.swift */,
+			);
+			path = MainMessages;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -159,6 +170,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EDD9162729A6F5BC00AC7FD5 /* ImagePicker.swift in Sources */,
+				EDF845A929B02F5200E52E0B /* MainMessegesView.swift in Sources */,
 				EDE4489B298F094F00477F56 /* LoginView.swift in Sources */,
 				EDE44899298F094F00477F56 /* SwiftUIFirebaseChatApp.swift in Sources */,
 			);
