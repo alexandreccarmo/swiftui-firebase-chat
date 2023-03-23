@@ -63,9 +63,7 @@ struct MainMessagesView: View {
     var body: some View {
         NavigationView {
             
-            VStack {
-//                Text("User: \(vm.chatUser?.uid ?? "")")
-                
+            VStack {                
                 customNavBar
                 messagesView
             }
