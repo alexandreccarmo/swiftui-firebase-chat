@@ -11,24 +11,7 @@ import FirebaseStorage
 import FirebaseFirestore
 
 //singleton necessario para os recursos de fibase funcionarem no preview :)
-class FirebaseManager: NSObject {
-    
-    let auth: Auth
-    let storage: Storage
-    let fireStore: Firestore
-    
-    static let shared = FirebaseManager()
-    
-    override init() {
-        FirebaseApp.configure()
-        
-        self.auth = Auth.auth()
-        self.storage = Storage.storage()
-        self.fireStore = Firestore.firestore()
-        
-        super.init()
-    }
-}
+
 
 struct LoginView: View {
     

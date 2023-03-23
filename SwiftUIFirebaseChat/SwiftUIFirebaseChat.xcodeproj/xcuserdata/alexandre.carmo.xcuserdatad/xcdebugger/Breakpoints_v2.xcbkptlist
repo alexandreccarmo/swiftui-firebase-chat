@@ -14,8 +14,8 @@
             filePath = "SwiftUIFirebaseChat/LoginView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
+            startingLineNumber = "114"
+            endingLineNumber = "114"
             landmarkName = "handleAction()"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,8 +30,8 @@
             filePath = "SwiftUIFirebaseChat/LoginView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "136"
-            endingLineNumber = "136"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "loginUser()"
             landmarkType = "7">
          </BreakpointContent>
